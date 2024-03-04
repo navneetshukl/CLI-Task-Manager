@@ -1,4 +1,4 @@
-module github.com/navneetshukl
+module github.com/navneetshukl/task
 
 go 1.21.4
 
