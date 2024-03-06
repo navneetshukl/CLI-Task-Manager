@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/boltdb/bolt"
+	"github.com/navneetshukl/task/models"
 )
 
 var taskBucket = []byte("tasks")
@@ -40,6 +41,37 @@ func CreateTask(task string) (int, error) {
 		return -1, err
 	}
 	return id, nil
+}
+
+// AllTasks function return all  the data from BOLTDB
+func AllTasks() ([]models.Task, error) {
+	var tasks []models.Task
+
+	err := db.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket(taskBucket)
+		c := b.Cursor()
+
+		for k, v := c.First(); k != nil; k, v = c.Next() {
+			tasks = append(tasks, models.Task{
+				Key:   btoi(k),
+				Value: string(v),
+			})
+		}
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return tasks, nil
+
+}
+
+// DeleteTask function will delete data from BOLTDB
+func DeleteTask(key int) error {
+	return db.Update(func(tx *bolt.Tx) error {
+		b := tx.Bucket(taskBucket)
+		return b.Delete(itob(key))
+	})
 }
 
 // itob function convert integer to byte

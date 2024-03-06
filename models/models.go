@@ -1,6 +1,6 @@
 package models
 
 type Task struct{
-	Key string
+	Key int
 	Value string
 }
