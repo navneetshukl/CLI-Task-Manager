@@ -13,10 +13,12 @@ import (
 func main() {
 	home, _ := homedir.Dir()
 
-	dbPath := filepath.Join(home, "db.db")
+	dbPath := filepath.Join(home, "task.db")
 	must(db.DBInit(dbPath))
 
 	must(cmd.RootCmd.Execute())
+
+	fmt.Println(home)
 }
 
 // must is a helper function which will handle if any error occured is right way
