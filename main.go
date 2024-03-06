@@ -18,7 +18,7 @@ func main() {
 
 	must(cmd.RootCmd.Execute())
 
-	fmt.Println(home)
+	//fmt.Println(home)
 }
 
 // must is a helper function which will handle if any error occured is right way
